@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionnaire — Style d'Attachement</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --beige: #f5f0e8;
+    --ochre: #c8a96e;
+    --ochre-light: #e8d5a8;
+    --navy: #1a2035;
+    --navy-mid: #2c3555;
+    --text: #2a2010;
+    --muted: #7a6a50;
+    --border: #d4c49a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--beige);
+    color: var(--text);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 48px 24px 80px;
+  }
+
+  .wrapper { max-width: 720px; margin: 0 auto; }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--ochre);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .header p {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .instructions {
+    background: white;
+    border-left: 3px solid var(--ochre);
+    padding: 14px 18px;
+    margin-bottom: 36px;
+    font-size: 14px;
+    color: var(--navy-mid);
+    line-height: 1.7;
+  }
+
+  /* Progress */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 10px;
+    z-index: 10;
+    background: var(--beige);
+    padding: 8px 0;
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--ochre);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  .progress-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* Section */
+  .section-header {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--ochre);
+    text-transform: uppercase;
+    margin: 48px 0 24px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Question */
+  .question-block {
+    margin-bottom: 36px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .q-num {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--ochre);
+    min-width: 28px;
+    padding-top: 2px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .q-situation {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--navy);
+    font-style: italic;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 42px;
+  }
+
+  .option-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    background: white;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .option-label:hover {
+    border-color: var(--ochre);
+    background: rgba(200,169,110,0.05);
+  }
+
+  .option-label.selected {
+    border-color: var(--ochre);
+    background: rgba(200,169,110,0.09);
+  }
+
+  .option-label input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 17px;
+    height: 17px;
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .option-label input[type="radio"]:checked {
+    border-color: var(--ochre);
+    background: var(--ochre);
+  }
+
+  .option-label input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5px; height: 5px;
+    background: white;
+    border-radius: 50%;
+  }
+
+  .option-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  /* Button */
+  .btn-wrap { text-align: center; margin-top: 52px; }
+
+  button {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--navy);
+    color: var(--ochre-light);
+    border: none;
+    padding: 16px 44px;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+  }
+
+  button:disabled { opacity: 0.35; cursor: not-allowed; }
+  button:not(:disabled):hover { background: var(--navy-mid); }
+
+  .btn-note {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 10px;
+  }
+
+  /* RESULT */
+  #result {
+    display: none;
+    margin-top: 60px;
+    animation: fadeIn 0.7s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-header {
+    text-align: center;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .result-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    color: var(--navy);
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  .result-header .profile-tagline {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 10px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Axes display */
+  .axes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .axis-card {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 18px 16px;
+  }
+
+  .axis-card .axis-name {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--ochre);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .axis-bar-wrap {
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .axis-bar-fill {
+    height: 100%;
+    background: var(--navy);
+    border-radius: 3px;
+    transition: width 0.9s ease;
+    width: 0%;
+  }
+
+  .axis-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .axis-score {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--navy);
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  /* Matrix */
+  .matrix-section {
+    margin-bottom: 36px;
+  }
+
+  .matrix-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ochre);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    position: relative;
+  }
+
+  .matrix-cell {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    opacity: 0.45;
+    transition: opacity 0.3s;
+  }
+
+  .matrix-cell.active {
+    opacity: 1;
+    border-color: var(--ochre);
+    border-width: 2px;
+    position: relative;
+  }
+
+  .matrix-cell.active::before {
+    content: '✦';
+    position: absolute;
+    top: 8px; right: 10px;
+    color: var(--ochre);
+    font-size: 10px;
+  }
+
+  .cell-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--navy);
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+
+  .cell-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .matrix-axis-x {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  /* Profile block */
+  .profile-main {
+    background: white;
+    border-left: 3px solid var(--ochre);
+    padding: 28px 26px 24px;
+    margin-bottom: 20px;
+  }
+
+  .profile-main h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 16px;
+    letter-spacing: 0.06em;
+  }
+
+  .profile-main p {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+
+  .profile-main p:last-child { margin-bottom: 0; }
+
+  /* Dimensions */
+  .dimensions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .dim-card {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+  }
+
+  .dim-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--ochre);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .dim-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Pistes */
+  .piste {
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    margin-top: 8px;
+  }
+
+  .piste-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ochre);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .piste ul { list-style: none; padding: 0; }
+
+  .piste ul li {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+    padding: 9px 0 9px 18px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .piste ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--ochre);
+  }
+
+  .piste ul li:last-child { border-bottom: none; }
+
+  .source {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 560px) {
+    .axes-grid, .dimensions, .matrix { grid-template-columns: 1fr; }
+    .options { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="eyebrow">Psychologie relationnelle</div>
+    <h1>Questionnaire — Style d'Attachement</h1>
+    <p>Pour chaque situation, choisissez la réaction qui vous ressemble le plus — pas celle que vous aimeriez avoir.</p>
+  </div>
+
+  <div class="instructions">
+    Lisez chaque situation et sélectionnez <strong>une seule réponse</strong> — celle qui correspond à votre réaction naturelle et instinctive. Il n'y a pas de bonne ou mauvaise réponse. Votre profil parmi 4 possibles sera révélé à la fin.
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">0 / 28</div>
+  </div>
+
+  <div id="questions"></div>
+
+  <div class="btn-wrap">
+    <button id="submitBtn" onclick="showResult()" disabled>Découvrir mon profil</button>
+    <div class="btn-note" id="btnNote">Répondez à toutes les questions pour continuer</div>
+  </div>
+
+  <div id="result"></div>
+
+  <div class="source">Construit sur le modèle bidimensionnel de Bartholomew & Horowitz (1991) et les travaux de Fraley & Shaver sur l'attachement adulte.</div>
+</div>
+
+<script>
+/*
+  Chaque question score sur UN axe uniquement :
+  - axe AX (Anxiété d'abandon) : score 0 = faible anxiété / score 1 = haute anxiété
+  - axe EV (Évitement de l'intimité) : score 0 = faible évitement / score 1 = haut évitement
+
+  Croisement final :
+  - AX faible + EV faible = Sécurisé
+  - AX haute  + EV faible = Anxieux
+  - AX faible + EV haute  = Évitant
+  - AX haute  + EV haute  = Désorganisé
+*/
+
+const sections = [
+  {
+    title: "La peur de perdre l'autre",
+    questions: [
+      {
+        axis: "AX",
+        situation: "Ton/ta partenaire met du temps à répondre à tes messages.",
+        options: [
+          { text: "Je suppose qu'il/elle est occupé(e). Je passe à autre chose sans y penser.", score: 0 },
+          { text: "Je commence à imaginer le pire — est-ce qu'il/elle m'évite ? Est-ce que j'ai dit quelque chose de travers ?", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Ton/ta partenaire semble moins enthousiaste qu'à l'habitude.",
+        options: [
+          { text: "Je lui demande si tout va bien, sans en faire une affaire personnelle.", score: 0 },
+          { text: "Je me demande si ses sentiments ont changé envers moi.", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Tu n'as pas eu de signe de ton/ta partenaire de toute la journée.",
+        options: [
+          { text: "Je vis ma journée normalement. Il/elle a sa vie, moi la mienne.", score: 0 },
+          { text: "L'absence me pèse. J'ai du mal à rester concentré(e) sur autre chose.", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Ton/ta partenaire te dit qu'il/elle a besoin de temps pour réfléchir à votre relation.",
+        options: [
+          { text: "C'est inconfortable, mais je respecte son besoin. Je lui laisse de l'espace.", score: 0 },
+          { text: "La panique s'installe immédiatement. J'ai besoin de savoir ce qu'il/elle pense maintenant.", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Dans une relation, tu penses souvent :",
+        options: [
+          { text: "Je me sens en sécurité. Je ne doute pas de l'amour de mon/ma partenaire.", score: 0 },
+          { text: "J'ai toujours un peu peur que l'autre finisse par partir ou se lasser.", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Ton/ta partenaire passe une soirée avec des amis sans t'inviter.",
+        options: [
+          { text: "C'est normal. Tout le monde a besoin de son espace social.", score: 0 },
+          { text: "Je me sens un peu exclu(e). Des questions me traversent l'esprit.", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Après une dispute, ton/ta partenaire ne te contacte pas pendant quelques heures.",
+        options: [
+          { text: "Je lui laisse le temps de souffler. On en reparlera quand on sera prêts.", score: 0 },
+          { text: "L'attente est insupportable. J'ai besoin de résoudre ça tout de suite.", score: 1 },
+        ]
+      },
+    ]
+  },
+  {
+    title: "L'inconfort avec l'intimité",
+    questions: [
+      {
+        axis: "EV",
+        situation: "Ton/ta partenaire te demande comment tu te sens vraiment.",
+        options: [
+          { text: "Je partage ce que je vis. La vulnérabilité fait partie de la relation.", score: 0 },
+          { text: "Je minimise ou je dévie. Je ne me sens pas à l'aise pour aller là.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "La relation devient sérieuse et exclusive.",
+        options: [
+          { text: "Je me sens bien. C'est naturel quand ça se passe bien avec quelqu'un.", score: 0 },
+          { text: "Je commence à ressentir une résistance. Je me sens à l'étroit.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "Ton/ta partenaire te dit qu'il/elle a besoin de toi émotionnellement.",
+        options: [
+          { text: "Je l'écoute et je l'accompagne. C'est naturel dans une relation.", score: 0 },
+          { text: "Je me sens mal à l'aise. Le poids émotionnel de l'autre m'oppresse.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "Ton/ta partenaire pleure devant toi.",
+        options: [
+          { text: "Je reste présent(e) et je le/la soutiens naturellement.", score: 0 },
+          { text: "Je ne sais pas quoi faire. Les larmes de l'autre me mettent mal à l'aise.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "Quelqu'un te dit « je t'aime » pour la première fois.",
+        options: [
+          { text: "Si je le ressens aussi, je le dis. Ça me touche.", score: 0 },
+          { text: "Je me ferme instinctivement. Même si je ressens quelque chose, les mots ne sortent pas.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "Dans ta vie en général, tu préfères :",
+        options: [
+          { text: "Partager mon quotidien avec quelqu'un de proche. La connexion me nourrit.", score: 0 },
+          { text: "Garder une grande part de ma vie pour moi. La dépendance m'étouffe.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "Ton/ta partenaire parle de projets d'avenir ensemble.",
+        options: [
+          { text: "Si c'est le bon moment et la bonne personne, ça me paraît naturel et beau.", score: 0 },
+          { text: "Je ressens une résistance. Je n'ai pas envie de m'engager aussi loin.", score: 1 },
+        ]
+      },
+    ]
+  },
+  {
+    title: "Les contradictions internes",
+    questions: [
+      {
+        axis: "AX",
+        situation: "Tu obtiens enfin la relation stable et aimante que tu voulais.",
+        options: [
+          { text: "Je me sens en sécurité et épanoui(e) dans cette stabilité.", score: 0 },
+          { text: "Je me sens bien, mais j'ai toujours peur que ça s'arrête. Je cherche des signes d'alerte.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "La même situation — tu obtiens la relation stable que tu voulais.",
+        options: [
+          { text: "Je l'accueille pleinement. C'est ce que je cherchais.", score: 0 },
+          { text: "Je me sens curieusement moins attiré(e). Je ne sais plus si c'est ce que je veux.", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Ton/ta partenaire prend de la distance émotionnelle.",
+        options: [
+          { text: "Je lui pose la question directement et sereinement.", score: 0 },
+          { text: "Ça réveille une anxiété profonde. Je fais tout pour recréer la connexion.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "Ton/ta partenaire se rapproche et devient plus affectueux/affectueuse.",
+        options: [
+          { text: "J'apprécie cette chaleur. Ça me fait du bien.", score: 0 },
+          { text: "Je commence à prendre de la distance instinctivement.", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Tu repenses à tes relations passées.",
+        options: [
+          { text: "J'ai eu des hauts et des bas, mais globalement je garde une image équilibrée.", score: 0 },
+          { text: "J'ai souvent souffert de ne pas me sentir assez aimé(e) ou rassuré(e).", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "Tu repenses aux moments où une relation devenait vraiment sérieuse.",
+        options: [
+          { text: "Je vivais ça naturellement, sans résistance particulière.", score: 0 },
+          { text: "J'ai souvent mis fin à la relation ou pris de la distance à ce stade précis.", score: 1 },
+        ]
+      },
+    ]
+  },
+  {
+    title: "Le soi et l'autre dans la relation",
+    questions: [
+      {
+        axis: "AX",
+        situation: "Ton/ta partenaire ne te fait pas de compliment depuis un moment.",
+        options: [
+          { text: "Je ne m'en préoccupe pas. Je sais que ça ne traduit pas forcément ses sentiments.", score: 0 },
+          { text: "Je commence à douter. Est-ce qu'il/elle est toujours attiré(e) par moi ?", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "Ton/ta partenaire te dit qu'il/elle a besoin de toi, qu'il/elle ne pourrait pas vivre sans toi.",
+        options: [
+          { text: "Je trouve ça touchant. Ça me renforce dans la relation.", score: 0 },
+          { text: "Ça me pèse. Cette dépendance me donne envie de reculer.", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Tu dois exprimer un besoin à ton/ta partenaire.",
+        options: [
+          { text: "Je le dis clairement. Mes besoins sont légitimes.", score: 0 },
+          { text: "J'ai peur d'être trop envahissant(e) ou de le/la faire fuir.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "Ton/ta partenaire partage ses peurs et ses failles avec toi.",
+        options: [
+          { text: "Je reçois ça avec bienveillance. La vulnérabilité de l'autre me rapproche de lui/elle.", score: 0 },
+          { text: "Je ressens un malaise. Cette intimité me met dans une position inconfortable.", score: 1 },
+        ]
+      },
+      {
+        axis: "AX",
+        situation: "Quelqu'un que tu trouves attirant(e) te fait de l'œil.",
+        options: [
+          { text: "Je le remarque, mais ça ne change rien à ce que je ressens pour mon/ma partenaire.", score: 0 },
+          { text: "Je culpabilise même d'y avoir fait attention. J'ai peur de ce que ça dit de moi.", score: 1 },
+        ]
+      },
+      {
+        axis: "EV",
+        situation: "La même situation — quelqu'un d'attirant te fait de l'œil.",
+        options: [
+          { text: "Je l'ignore. Je suis bien dans ma relation.", score: 0 },
+          { text: "Ça me plaît. J'aime savoir que je reste libre et désirable.", score: 1 },
+        ]
+      },
+    ]
+  },
+];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const container = document.getElementById('questions');
+let globalIndex = 0;
+const answeredMap = {};
+let totalQuestions = 0;
+const questionMeta = []; // { axis, score_options }
+
+sections.forEach((section) => {
+  const sectionHeader = document.createElement('div');
+  sectionHeader.className = 'section-header';
+  sectionHeader.textContent = section.title;
+  container.appendChild(sectionHeader);
+
+  section.questions.forEach((q) => {
+    const idx = globalIndex++;
+    totalQuestions++;
+
+    // Shuffle options but keep track of axis+score
+    const shuffledOptions = shuffle(q.options);
+    questionMeta[idx] = { axis: q.axis, options: shuffledOptions };
+
+    const block = document.createElement('div');
+    block.className = 'question-block';
+    block.innerHTML = `
+      <div class="q-header">
+        <span class="q-num">${String(idx+1).padStart(2,'0')}</span>
+        <span class="q-situation">${q.situation}</span>
+      </div>
+      <div class="options">
+        ${shuffledOptions.map((opt, oi) => `
+          <label class="option-label" id="lbl-${idx}-${oi}">
+            <input type="radio" name="q${idx}" value="${oi}" onchange="onSelect(${idx}, ${oi})">
+            <span class="option-text">${opt.text}</span>
+          </label>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(block);
+  });
+});
+
+document.getElementById('progressLabel').textContent = `0 / ${totalQuestions}`;
+
+function onSelect(idx, oi) {
+  document.querySelectorAll(`[id^="lbl-${idx}-"]`).forEach(l => l.classList.remove('selected'));
+  document.getElementById(`lbl-${idx}-${oi}`).classList.add('selected');
+
+  const wasAnswered = answeredMap[idx] !== undefined;
+  answeredMap[idx] = oi;
+  if (!wasAnswered) {
+    const count = Object.keys(answeredMap).length;
+    document.getElementById('progressFill').style.width = (count / totalQuestions * 100) + '%';
+    document.getElementById('progressLabel').textContent = `${count} / ${totalQuestions}`;
+    if (count === totalQuestions) {
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('btnNote').style.display = 'none';
+    }
+  }
+}
+
+const profiles = {
+  secure: {
+    name: "Sécurisé(e)",
+    tagline: "Vous êtes ancré(e) en vous-même — la relation vous nourrit sans vous définir.",
+    desc: "Vous vous sentez à l'aise aussi bien avec la proximité qu'avec la distance. Vous faites confiance à votre partenaire sans avoir besoin de validation constante, et l'intimité ne vous effraie pas. Vous gérez les conflits avec calme et vivez les ruptures avec du recul.",
+    desc2: "Ce profil ne signifie pas l'absence de blessures — mais vous avez développé une capacité à réguler vos émotions et à rester ancré(e) même sous pression. C'est le profil vers lequel tous les autres évoluent avec du travail intérieur.",
+    dimensions: [
+      { title: "Face à la distance", text: "Vous l'acceptez sans l'interpréter comme un rejet." },
+      { title: "Face à l'intimité", text: "Vous l'accueillez naturellement, sans résistance." },
+      { title: "Face aux conflits", text: "Vous les gérez avec calme et ouverture." },
+      { title: "Face à l'engagement", text: "Il vous semble naturel quand la relation est bonne." },
+    ],
+    pistes: [
+      "Vérifier que votre sécurité ne masque pas une zone d'évitement non identifiée",
+      "Être vigilant(e) à choisir des partenaires à la même maturité émotionnelle",
+      "Apprendre à soutenir un partenaire anxieux ou évitant sans vous perdre",
+      "Continuer à approfondir la communication émotionnelle",
+    ]
+  },
+  anxious: {
+    name: "Anxieux/Anxieuse",
+    tagline: "Vous désirez profondément la connexion — mais la peur de perdre l'autre sabote votre tranquillité.",
+    desc: "Vous aimez la proximité et êtes capable d'une grande intensité émotionnelle. Mais une peur sous-jacente — être abandonné(e), ne pas être assez bien, perdre l'autre — génère une vigilance constante. Vous analysez les comportements de votre partenaire, cherchez des signes, avez besoin de réassurance pour vous sentir en sécurité.",
+    desc2: "Ce n'est pas une faiblesse. C'est un système nerveux qui a appris à rester en alerte pour protéger la relation. Mais cette hyper-vigilance a un coût : elle épuise, et paradoxalement peut repousser l'autre.",
+    dimensions: [
+      { title: "Face à la distance", text: "Vous l'interprétez comme un rejet ou une faute de votre part." },
+      { title: "Face à l'intimité", text: "Vous la désirez profondément — et craignez qu'elle ne dure pas." },
+      { title: "Face aux conflits", text: "Vous réagissez fort sur le moment, puis regrettez souvent." },
+      { title: "Face à l'engagement", text: "Il vous rassure — mais la peur de le perdre reste présente." },
+    ],
+    pistes: [
+      "Apprendre à distinguer une peur légitime d'une peur projetée",
+      "Développer une sécurité intérieure qui ne dépend pas du comportement de l'autre",
+      "Identifier les blessures d'enfance à l'origine de l'hypervigilance",
+      "Travailler la régulation émotionnelle pour éviter les réactions impulsives",
+      "Apprendre à exprimer ses besoins sans anxiété ni reproche",
+    ]
+  },
+  avoidant: {
+    name: "Évitant(e)",
+    tagline: "Vous protégez votre indépendance — mais cette protection vous empêche de vous laisser vraiment aimer.",
+    desc: "Vous valorisez profondément votre liberté et votre autonomie. Quand une relation devient sérieuse, vous ressentez un besoin instinctif de vous retirer — émotionnellement d'abord, puis physiquement. Ce n'est pas un manque d'amour, c'est une peur profonde : peur de perdre votre identité, peur d'être blessé(e) si vous vous attachez vraiment.",
+    desc2: "Le schéma le plus courant : vous êtes attiré(e) tant que la relation reste incertaine. Dès qu'elle devient stable et sécurisante, l'attirance baisse. Vous fuyez juste au moment où quelque chose de réel pourrait se construire.",
+    dimensions: [
+      { title: "Face à la distance", text: "Vous vous y sentez à l'aise — parfois même soulagé(e)." },
+      { title: "Face à l'intimité", text: "Elle vous attire et vous effraie à la fois." },
+      { title: "Face aux conflits", text: "Vous vous fermez. La déconnexion est votre protection." },
+      { title: "Face à l'engagement", text: "Vous ressentez une résistance au moment de vous engager vraiment." },
+    ],
+    pistes: [
+      "Identifier la blessure originelle qui a construit ce besoin de protection",
+      "Apprendre à distinguer le besoin légitime d'espace et la fuite émotionnelle",
+      "Travailler la tolérance à la vulnérabilité et à la dépendance saine",
+      "Comprendre le mécanisme de la désidéalisation quand la relation devient réelle",
+      "Apprendre à rester présent(e) dans l'inconfort de l'intimité",
+    ]
+  },
+  disorganized: {
+    name: "Désorganisé(e)",
+    tagline: "Vous voulez l'amour et vous le fuyez en même temps — la relation est à la fois refuge et menace.",
+    desc: "Vous portez les deux conflits en même temps : une haute anxiété d'abandon ET un fort inconfort avec l'intimité. Ce n'est pas un mélange d'anxieux et d'évitant — c'est un profil à part entière, le plus complexe et souvent le plus douloureux à vivre. Vous voulez profondément être aimé(e), mais dès que quelqu'un s'approche vraiment, quelque chose en vous se ferme ou fuit.",
+    desc2: "Le schéma typique : quand l'autre est distant, vous souffrez et faites tout pour recréer la connexion. Quand l'autre se rapproche et vous aime vraiment, vous prenez de la distance. La stabilité vous est à la fois désirée et insupportable. Ce profil se construit souvent autour de blessures précoces où la figure d'attachement était à la fois source de réconfort et de peur.",
+    dimensions: [
+      { title: "Face à la distance", text: "Elle vous angoisse — et pourtant vous la provoquez souvent." },
+      { title: "Face à l'intimité", text: "Elle est désirée et terrifiante simultanément." },
+      { title: "Face aux conflits", text: "Réactions intenses, puis fermeture ou fuite." },
+      { title: "Face à l'engagement", text: "Vous le voulez — et vous le sabotez quand il arrive." },
+    ],
+    pistes: [
+      "Reconnaître le paradoxe central : vous fuyez ce que vous désirez le plus",
+      "Travailler les blessures précoces à l'origine de cette double peur",
+      "Apprendre à tolérer la sécurité sans la fuir",
+      "Identifier les déclencheurs qui activent la fuite ou l'hypervigilance",
+      "Développer une relation stable avec soi-même avant tout",
+      "Un accompagnement thérapeutique approfondi est particulièrement utile pour ce profil",
+    ]
+  }
+};
+
+function showResult() {
+  let axScores = { high: 0, low: 0 };
+  let evScores = { high: 0, low: 0 };
+  let axTotal = 0, evTotal = 0;
+
+  Object.entries(answeredMap).forEach(([idx, oi]) => {
+    const meta = questionMeta[idx];
+    const selectedScore = meta.options[oi].score;
+    if (meta.axis === 'AX') {
+      axTotal++;
+      if (selectedScore === 1) axScores.high++; else axScores.low++;
+    } else {
+      evTotal++;
+      if (selectedScore === 1) evScores.high++; else evScores.low++;
+    }
+  });
+
+  const axPct = Math.round((axScores.high / axTotal) * 100);
+  const evPct = Math.round((evScores.high / evTotal) * 100);
+
+  // Threshold: 50%
+  const highAX = axPct >= 50;
+  const highEV = evPct >= 50;
+
+  let profileKey;
+  if (!highAX && !highEV) profileKey = 'secure';
+  else if (highAX && !highEV) profileKey = 'anxious';
+  else if (!highAX && highEV) profileKey = 'avoidant';
+  else profileKey = 'disorganized';
+
+  const p = profiles[profileKey];
+
+  const matrixCells = [
+    { key: 'anxious',      label: 'Anxieux', desc: 'Haute anxiété · Faible évitement', pos: 'top-left' },
+    { key: 'disorganized', label: 'Désorganisé', desc: 'Haute anxiété · Haut évitement', pos: 'top-right' },
+    { key: 'secure',       label: 'Sécurisé', desc: 'Faible anxiété · Faible évitement', pos: 'bottom-left' },
+    { key: 'avoidant',     label: 'Évitant', desc: 'Faible anxiété · Haut évitement', pos: 'bottom-right' },
+  ];
+
+  const dimsHTML = p.dimensions.map(d => `
+    <div class="dim-card">
+      <div class="dim-title">${d.title}</div>
+      <p>${d.text}</p>
+    </div>
+  `).join('');
+
+  const pistesHTML = p.pistes.map(pi => `<li>${pi}</li>`).join('');
+
+  const matrixHTML = matrixCells.map(cell => `
+    <div class="matrix-cell ${cell.key === profileKey ? 'active' : ''}">
+      <div class="cell-title">${cell.label}</div>
+      <div class="cell-desc">${cell.desc}</div>
+    </div>
+  `).join('');
+
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = `
+    <div class="result-header">
+      <div class="eyebrow">Votre profil d'attachement</div>
+      <h2>${p.name}</h2>
+      <div class="profile-tagline">${p.tagline}</div>
+    </div>
+
+    <div class="axes-grid">
+      <div class="axis-card">
+        <div class="axis-name">Axe 1 — Anxiété d'abandon</div>
+        <div class="axis-bar-wrap">
+          <div class="axis-bar-fill" id="barAX" style="width:0%"></div>
+        </div>
+        <div class="axis-labels">
+          <span>Faible</span>
+          <span>Élevée</span>
+        </div>
+        <div class="axis-score">${axScores.high} / ${axTotal} réponses</div>
+      </div>
+      <div class="axis-card">
+        <div class="axis-name">Axe 2 — Évitement de l'intimité</div>
+        <div class="axis-bar-wrap">
+          <div class="axis-bar-fill" id="barEV" style="width:0%"></div>
+        </div>
+        <div class="axis-labels">
+          <span>Faible</span>
+          <span>Élevé</span>
+        </div>
+        <div class="axis-score">${evScores.high} / ${evTotal} réponses</div>
+      </div>
+    </div>
+
+    <div class="matrix-section">
+      <div class="matrix-title">Les 4 profils — votre position</div>
+      <div class="matrix">${matrixHTML}</div>
+      <div class="matrix-axis-x">← Faible évitement · · · Haut évitement →</div>
+    </div>
+
+    <div class="profile-main">
+      <h3>${p.name} — Description</h3>
+      <p>${p.desc}</p>
+      <p>${p.desc2}</p>
+    </div>
+
+    <div class="dimensions">${dimsHTML}</div>
+
+    <div class="piste">
+      <div class="piste-title">Pistes de travail</div>
+      <ul>${pistesHTML}</ul>
+    </div>
+  `;
+
+  resultDiv.style.display = 'block';
+  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  setTimeout(() => {
+    document.getElementById('barAX').style.width = axPct + '%';
+    document.getElementById('barEV').style.width = evPct + '%';
+  }, 400);
+}
+</script>
+</body>
+</html>
