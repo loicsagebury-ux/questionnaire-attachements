@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questionnaire — Style d'Attachement</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Test d'attachement</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -16,6 +15,25 @@
     --text: #2a2010;
     --muted: #7a6a50;
     --border: #d4c49a;
+    --surface: #ffffff;
+    --btn-bg: #1a2035;
+    --btn-fg: #e8d5a8;
+    --btn-hover: #2c3555;
+    --bar: #1a2035;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --beige: #141826; --ochre: #d4b47a; --ochre-light: #e8d5a8;
+      --navy: #ece4d2; --navy-mid: #d8cdb6; --text: #e6dcc8; --muted: #a8997e;
+      --border: #3a3a44; --surface: #1d2233; --btn-bg: #d4b47a; --btn-fg: #141826;
+      --btn-hover: #e2c58e; --bar: #d4b47a; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --beige: #141826; --ochre: #d4b47a; --ochre-light: #e8d5a8;
+    --navy: #ece4d2; --navy-mid: #d8cdb6; --text: #e6dcc8; --muted: #a8997e;
+    --border: #3a3a44; --surface: #1d2233; --btn-bg: #d4b47a; --btn-fg: #141826;
+    --btn-hover: #e2c58e; --bar: #d4b47a; color-scheme: dark;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,7 +44,9 @@
     font-family: 'EB Garamond', Georgia, serif;
     font-size: 15px;
     line-height: 1.6;
-    padding: 48px 24px 80px;
+    padding-block: 48px 80px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
   }
 
   .wrapper { max-width: 720px; margin: 0 auto; }
@@ -65,7 +85,7 @@
   }
 
   .instructions {
-    background: white;
+    background: var(--surface);
     border-left: 3px solid var(--ochre);
     padding: 14px 18px;
     margin-bottom: 36px;
@@ -81,7 +101,7 @@
     gap: 12px;
     margin-bottom: 40px;
     position: sticky;
-    top: 10px;
+    top: env(safe-area-inset-top, 0px);
     z-index: 10;
     background: var(--beige);
     padding: 8px 0;
@@ -167,7 +187,7 @@
     cursor: pointer;
     padding: 11px 14px;
     border: 1px solid var(--border);
-    background: white;
+    background: var(--surface);
     transition: border-color 0.2s, background 0.2s;
   }
 
@@ -206,7 +226,7 @@
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 5px; height: 5px;
-    background: white;
+    background: var(--surface);
     border-radius: 50%;
   }
 
@@ -224,8 +244,8 @@
     font-size: 11px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    background: var(--navy);
-    color: var(--ochre-light);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
     border: none;
     padding: 16px 44px;
     cursor: pointer;
@@ -233,7 +253,8 @@
   }
 
   button:disabled { opacity: 0.35; cursor: not-allowed; }
-  button:not(:disabled):hover { background: var(--navy-mid); }
+  button:not(:disabled):hover { background: var(--btn-hover); }
+  button:focus-visible, .option-label:focus-within, .cta a:focus-visible { outline: 2px solid var(--ochre); outline-offset: 2px; }
 
   .btn-note {
     font-size: 12px;
@@ -288,7 +309,7 @@
   }
 
   .axis-card {
-    background: white;
+    background: var(--surface);
     border: 1px solid var(--border);
     padding: 18px 16px;
   }
@@ -312,7 +333,7 @@
 
   .axis-bar-fill {
     height: 100%;
-    background: var(--navy);
+    background: var(--bar);
     border-radius: 3px;
     transition: width 0.9s ease;
     width: 0%;
@@ -357,7 +378,7 @@
   }
 
   .matrix-cell {
-    background: white;
+    background: var(--surface);
     border: 1px solid var(--border);
     padding: 14px 16px;
     opacity: 0.45;
@@ -404,7 +425,7 @@
 
   /* Profile block */
   .profile-main {
-    background: white;
+    background: var(--surface);
     border-left: 3px solid var(--ochre);
     padding: 28px 26px 24px;
     margin-bottom: 20px;
@@ -437,7 +458,7 @@
   }
 
   .dim-card {
-    background: white;
+    background: var(--surface);
     border: 1px solid var(--border);
     padding: 14px 16px;
   }
@@ -503,6 +524,15 @@
     border-top: 1px solid var(--border);
   }
 
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--beige); }
+  .byline { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin-top: 14px; }
+  .cta { background: var(--surface); border: 2px solid var(--ochre); padding: 28px 24px; margin-top: 40px; text-align: center; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+  .cta h3 { font-family: 'Cinzel', serif; font-size: 16px; color: var(--navy); font-weight: 600; text-wrap: balance; }
+  .cta p { font-size: 15px; color: var(--text); max-width: 460px; }
+  .cta .kw { font-family: 'Cinzel', serif; font-weight: 600; color: var(--ochre); letter-spacing: 0.08em; }
+  .cta a { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; background: var(--btn-bg); color: var(--btn-fg); text-decoration: none; padding: 16px 32px; }
+  .cta .handle { font-size: 13px; color: var(--muted); font-style: italic; user-select: all; }
+  @media (prefers-reduced-motion: reduce) { #result { animation: none; } .axis-bar-fill, .progress-bar-fill { transition: none; } }
   @media (max-width: 560px) {
     .axes-grid, .dimensions, .matrix { grid-template-columns: 1fr; }
     .options { padding-left: 0; }
@@ -514,26 +544,27 @@
 
   <div class="header">
     <div class="eyebrow">Psychologie relationnelle</div>
-    <h1>Questionnaire — Style d'Attachement</h1>
-    <p>Pour chaque situation, choisissez la réaction qui vous ressemble le plus — pas celle que vous aimeriez avoir.</p>
+    <h1>Quel est ton style d'attachement ?</h1>
+    <p>Pour chaque situation, choisis la réaction qui te ressemble le plus, pas celle que tu aimerais avoir.</p>
+    <div class="byline">par Loïc Sage</div>
   </div>
 
   <div class="instructions">
-    Lisez chaque situation et sélectionnez <strong>une seule réponse</strong> — celle qui correspond à votre réaction naturelle et instinctive. Il n'y a pas de bonne ou mauvaise réponse. Votre profil parmi 4 possibles sera révélé à la fin.
+    Lis chaque situation et choisis <strong>une seule réponse</strong> : celle qui correspond à ta réaction naturelle, instinctive. Il n'y a ni bonne ni mauvaise réponse. Ton profil, parmi 4 possibles, s'affiche à la fin.
   </div>
 
   <div class="progress-wrap">
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progressFill"></div>
     </div>
-    <div class="progress-label" id="progressLabel">0 / 28</div>
+    <div class="progress-label" id="progressLabel">0 / 26</div>
   </div>
 
   <div id="questions"></div>
 
   <div class="btn-wrap">
     <button id="submitBtn" onclick="showResult()" disabled>Découvrir mon profil</button>
-    <div class="btn-note" id="btnNote">Répondez à toutes les questions pour continuer</div>
+    <div class="btn-note" id="btnNote">Réponds à toutes les questions pour continuer</div>
   </div>
 
   <div id="result"></div>
@@ -1038,6 +1069,13 @@ function showResult() {
       <div class="piste-title">Pistes de travail</div>
       <ul>${pistesHTML}</ul>
     </div>
+
+    <div class="cta">
+      <h3>Tu veux comprendre ce que ce profil dit de toi ?</h3>
+      <p>Écris-moi <span class="kw">SÉCURE</span> sur Instagram avec ton profil (<strong>${p.name}</strong>). Je te dis ce que j'en pense et par où commencer.</p>
+      <a href="https://ig.me/m/loic.sage" target="_blank" rel="noopener">M'écrire sur Instagram</a>
+      <div class="handle">@loic.sage</div>
+    </div>
   `;
 
   resultDiv.style.display = 'block';
@@ -1049,5 +1087,6 @@ function showResult() {
   }, 400);
 }
 </script>
+
 </body>
 </html>
